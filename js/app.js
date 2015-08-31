@@ -2,7 +2,9 @@
 var Enemy = function() {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
-
+    this.x=Math.random()*500;
+    this.y=20+Math.random()*250;
+    this.velocity=1;
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -16,6 +18,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.velocity=this.velocity*dt;
 };
 
 // Draw the enemy on the screen, required method for game
@@ -29,7 +32,9 @@ Enemy.prototype.render = function() {
 
 var Player = function() {
     
-    this.sprite = 'images/char-cat-girl.png';
+    this.x=200;
+    this.y=400;
+    this.sprite = 'images/char-boy.png';
     
 };
 
@@ -40,13 +45,13 @@ Player.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.velocity=this.velocity*dt;
 };
 
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
-
 
 Player.prototype.handleInput = function(key) {
     /*if(key === "left") {}
