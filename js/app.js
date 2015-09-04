@@ -55,6 +55,10 @@ Player.prototype.update = function(dt) {
     if(this.y < 0) {
         this.y=400;
     }
+    else if(this.y > 400) {
+        this.y=400;
+    }
+
 
 };
 
