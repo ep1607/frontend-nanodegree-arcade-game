@@ -1,3 +1,7 @@
+//promoted loction of player
+var x=0;
+var y=0;
+
 // Enemies our player must avoid
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -24,9 +28,28 @@ Enemy.prototype.update = function(dt) {
     if(this.x > 505) {
         this.x=Math.floor(-50+Math.random()*(-1000));
     }
+    
+    collisionDetector(this.x, this.y);
  
 };
 
+var collisionDetector = function(lox, loy) {
+    
+    var rangeX = Math.abs(lox-x);
+    var rangeY = Math.abs(loy-y);
+    //console.log("absX:"+rangeX+" absY:"+rangeY);
+    
+    if ((rangeX <= 45) && (rangeY <= 45)) {
+        //console.log("reset");
+        resetGame();
+    }
+};
+
+var resetGame = function() {
+    
+    player = new Player();
+    
+};
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -58,9 +81,11 @@ Player.prototype.update = function(dt) {
     else if(this.y > 400) {
         this.y=400;
     }
-
-
+    x=this.x;
+    y=this.y;
+    
 };
+
 
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function() {
