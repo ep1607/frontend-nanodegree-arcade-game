@@ -63,7 +63,7 @@ var Player = function() {
     
     this.x=200;
     this.y=400;
-    this.sprite = 'images/char-boy.png';
+    this.sprite = 'images/char-cat-girl.png';
     
 };
 
@@ -76,9 +76,12 @@ Player.prototype.update = function(dt) {
     // all computers.
     
     if(this.y < 0) {
-        this.y=400;
+        //if player reaches watter
+        //this.y=400;
+        resetGame();
     }
     else if(this.y > 400) {
+        //if player wants to move down
         this.y=400;
     }
     x=this.x;
