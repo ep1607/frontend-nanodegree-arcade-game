@@ -1,6 +1,11 @@
 //promoted loction of player
 var x=0;
 var y=0;
+var index=0;
+
+var playerSprite = [
+    'char-boy', 'char-cat-girl', 'char-horn-girl', 'char-pink-girl', 'char-princess-girl'
+];
 
 // Enemies our player must avoid
 var Enemy = function() {
@@ -50,6 +55,7 @@ var resetGame = function() {
     player = new Player();
     
 };
+
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -63,7 +69,7 @@ var Player = function() {
     
     this.x=200;
     this.y=400;
-    this.sprite = 'images/char-cat-girl.png';
+    this.sprite = 'images/'+playerSprite[index]+'.png';
     
 };
 
@@ -103,6 +109,16 @@ Player.prototype.handleInput = function(key) {
     
 };
 
+
+Player.prototype.changePlayer = function(pos) {
+    
+    console.log(pos);
+    index++;
+    index=index%5;
+    
+    this.sprite = 'images/'+playerSprite[index]+'.png';
+    
+};
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
@@ -131,3 +147,6 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+document.addEventListener('wheel', function(e) {
+    player.changePlayer(e.wheelDelta);
+});
