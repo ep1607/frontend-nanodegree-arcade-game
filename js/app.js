@@ -90,7 +90,7 @@ Player.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-    this.renderScore();
+    renderScore(this.score);
 };
 
 Player.prototype.handleInput = function(key) {
@@ -98,17 +98,6 @@ Player.prototype.handleInput = function(key) {
     else if(key === "right") {this.x+=50;}
     else if(key === "down") {this.y+=50;}
     else if(key === "up") {this.y-=50;}
-
-};
-
-Player.prototype.renderScore  =  function() {
-        
-        console.log(this.score);
-        ctx.clearRect(33, 75, 35, 40);
-        //ctx.fillStyle="#FFFFFF";
-        ctx.font="30px Verdana";
-       // ctx.fillText("win", 445, 535);
-        ctx.fillText(this.score, 40, 105);
 
 };
 
@@ -145,6 +134,37 @@ var resetPlayer = function() {
     player = new Player();
     
 };
+
+var renderScore  =  function(s) {
+        
+        console.log(s);
+        
+        if(s>2) {
+            renderWin();
+            //var timerId = setTimeout(resetPlayer, 5000);
+            //clearTimeout(timerId);
+
+            //resetPlayer();
+        } else {
+            ctx.clearRect(33, 75, 35, 40);
+            ctx.fillStyle="#000000";
+            ctx.font="30px Verdana";
+           // ctx.fillText("win", 445, 535);
+            ctx.fillText(s, 40, 105);    
+        }
+        
+};
+
+var renderWin  = function() {
+            ctx.fillStyle="#ffd700";
+            ctx.font="100px Verdana";
+           // ctx.fillText("win", 445, 535);
+            ctx.fillText("WIN!", 140, 330);
+            ctx.fillStyle="#ffffff";
+            ctx.font="25px Verdana";
+            ctx.fillText("hit the bug to restart the game!", 60, 350);
+    
+}
 
 
 // Now instantiate your objects.
