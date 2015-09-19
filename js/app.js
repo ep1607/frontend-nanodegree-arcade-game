@@ -38,23 +38,6 @@ Enemy.prototype.update = function(dt) {
  
 };
 
-var collisionDetector = function(lox, loy) {
-    
-    var rangeX = Math.abs(lox-x);
-    var rangeY = Math.abs(loy-y);
-    //console.log("absX:"+rangeX+" absY:"+rangeY);
-    
-    if ((rangeX <= 45) && (rangeY <= 45)) {
-        //console.log("reset");
-        resetGame();
-    }
-};
-
-var resetGame = function() {
-    
-    player = new Player();
-    
-};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -70,6 +53,7 @@ var Player = function() {
     this.x=200;
     this.y=400;
     this.sprite = 'images/'+playerSprite[index]+'.png';
+    this.score=0;
     
 };
 
@@ -82,13 +66,20 @@ Player.prototype.update = function(dt) {
     // all computers.
     
     if(this.y < 0) {
-        //if player reaches watter
-        //this.y=400;
-        resetGame();
+        //if player reaches water
+        this.y=400;
+        this.score++;
+        //resetPlayer();
     }
     else if(this.y > 400) {
         //if player wants to move down
         this.y=400;
+    }
+    else if(this.x  > 410) {
+        this.x=410;
+    }
+    else if(this.x < -10) {
+        this.x=-10;
     }
     x=this.x;
     y=this.y;
@@ -99,6 +90,7 @@ Player.prototype.update = function(dt) {
 // Draw the enemy on the screen, required method for game
 Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    this.renderScore();
 };
 
 Player.prototype.handleInput = function(key) {
@@ -106,19 +98,55 @@ Player.prototype.handleInput = function(key) {
     else if(key === "right") {this.x+=50;}
     else if(key === "down") {this.y+=50;}
     else if(key === "up") {this.y-=50;}
-    
+
+};
+
+Player.prototype.renderScore  =  function() {
+        
+        console.log(this.score);
+        ctx.clearRect(33, 75, 35, 40);
+        //ctx.fillStyle="#FFFFFF";
+        ctx.font="30px Verdana";
+       // ctx.fillText("win", 445, 535);
+        ctx.fillText(this.score, 40, 105);
+
 };
 
 
 Player.prototype.changePlayer = function(pos) {
     
     console.log(pos);
-    index++;
-    index=index%5;
+    
+    if(pos===120) {index++;}
+    else if(pos===-120) {
+        if(index>0) {index--;}
+        else {index=playerSprite.length-1;}
+    }
+    index=Math.abs(index)%5;
     
     this.sprite = 'images/'+playerSprite[index]+'.png';
     
 };
+
+var collisionDetector = function(lox, loy) {
+    
+    var rangeX = Math.abs(lox-x);
+    var rangeY = Math.abs(loy-y);
+    //console.log("absX:"+rangeX+" absY:"+rangeY);
+    
+    if ((rangeX <= 45) && (rangeY <= 45)) {
+        //console.log("reset");
+        resetPlayer();
+    }
+};
+
+var resetPlayer = function() {
+    
+    player = new Player();
+    
+};
+
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
