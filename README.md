@@ -1,6 +1,14 @@
 frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this rubric: https://www.udacity.com/course/viewer#!/c-ud015/l-3072058665/m-3072588797
+--> RUNNING THE GAME:
+To run the game open index.html in your browser
 
-for self-checking their submission.
+--> PLAYING THE GAME:
+to move UP, DOWN, LEFT, RIGHT use keyboard arrow keyes.
+
+to change player character SCROLL your MOUSE WHEEL.
+
+--> RULES OF THE GAME:
+cross the road and reach the water 3 times and you win. 
+if you hit the bug the counter resets the score.
