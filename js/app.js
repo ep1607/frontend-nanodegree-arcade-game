@@ -1,4 +1,5 @@
 //promoted loction of player
+//"use strict";
 var x=0;
 var y=0;
 var index=0;
@@ -34,7 +35,7 @@ Enemy.prototype.update = function(dt) {
         this.x=Math.floor(-50+Math.random()*(-1000));
     }
     
-    collisionDetector(this.x, this.y);
+    this.collisionDetector();
  
 };
 
@@ -43,6 +44,19 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
+
+Enemy.prototype.collisionDetector = function() {
+    
+    var rangeX = Math.abs(this.x-x);
+    var rangeY = Math.abs(this.y-y);
+    //console.log("absX:"+rangeX+" absY:"+rangeY);
+    
+    if ((rangeX <= 45) && (rangeY <= 45)) {
+        //console.log("reset");
+        resetPlayer();
+    }
+};
+
 
 // Now write your own player class
 // This class requires an update(), render() and
@@ -102,32 +116,15 @@ Player.prototype.handleInput = function(key) {
 };
 
 
-Player.prototype.changePlayer = function(pos) {
+Player.prototype.changePlayer = function() {
     
-    console.log(pos);
-    
-    if(pos===120) {index++;}
-    else if(pos===-120) {
-        if(index>0) {index--;}
-        else {index=playerSprite.length-1;}
-    }
+    index++;
     index=Math.abs(index)%5;
     
     this.sprite = 'images/'+playerSprite[index]+'.png';
     
 };
 
-var collisionDetector = function(lox, loy) {
-    
-    var rangeX = Math.abs(lox-x);
-    var rangeY = Math.abs(loy-y);
-    //console.log("absX:"+rangeX+" absY:"+rangeY);
-    
-    if ((rangeX <= 45) && (rangeY <= 45)) {
-        //console.log("reset");
-        resetPlayer();
-    }
-};
 
 var resetPlayer = function() {
     
@@ -164,7 +161,7 @@ var renderWin  = function() {
             ctx.font="25px Verdana";
             ctx.fillText("hit the bug to restart the game!", 60, 350);
     
-}
+};
 
 
 // Now instantiate your objects.
@@ -181,7 +178,6 @@ for (var i = 10; i >= 0 ; i--) {
 }
 
 
-
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
@@ -195,6 +191,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
-document.addEventListener('wheel', function(e) {
-    player.changePlayer(e.wheelDelta);
+document.addEventListener('wheel', function() {
+    player.changePlayer();
 });
+
