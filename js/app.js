@@ -107,6 +107,7 @@ Player.prototype.render = function() {
     renderScore(this.score);
 };
 
+// handles the input and translates it into player movement
 Player.prototype.handleInput = function(key) {
     if(key === "left") {this.x-=50;}
     else if(key === "right") {this.x+=50;}
@@ -115,7 +116,7 @@ Player.prototype.handleInput = function(key) {
 
 };
 
-
+//changes player sprite
 Player.prototype.changePlayer = function() {
     
     index++;
@@ -125,23 +126,21 @@ Player.prototype.changePlayer = function() {
     
 };
 
-
+//resets the player so that it creates a new one
 var resetPlayer = function() {
     
     player = new Player();
     
 };
 
+//renders the number successful road corsses that player has made
 var renderScore  =  function(s) {
         
         console.log(s);
         
+        //if players wins 3 times
         if(s>2) {
             renderWin();
-            //var timerId = setTimeout(resetPlayer, 5000);
-            //clearTimeout(timerId);
-
-            //resetPlayer();
         } else {
             ctx.clearRect(33, 75, 35, 40);
             ctx.fillStyle="#000000";
@@ -152,6 +151,8 @@ var renderScore  =  function(s) {
         
 };
 
+
+//renders message that player has won
 var renderWin  = function() {
             ctx.fillStyle="#ffd700";
             ctx.font="100px Verdana";
@@ -191,6 +192,7 @@ document.addEventListener('keyup', function(e) {
     player.handleInput(allowedKeys[e.keyCode]);
 });
 
+// wheel listener that calls the function to change player sprite
 document.addEventListener('wheel', function() {
     player.changePlayer();
 });
